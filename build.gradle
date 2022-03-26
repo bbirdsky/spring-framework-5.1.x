@@ -147,6 +147,8 @@ configure(allprojects) { project ->
 	}
 
 	repositories {
+		maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "http://nexus.bsdn.org/content/groups/public/" }
 		maven { url "https://repo.spring.io/libs-release" }
 		mavenLocal()
 	}
