@@ -32,4 +32,5 @@ rootProject.children.each {project ->
 include 'spring-mybatis-example-a'
 // include 'spring-micservice-c-demo1-9001'
 include 'spring-test'
+include 'spring-demo'
 
