@@ -83,7 +83,7 @@ public class InjectionMetadata {
 		Collection<InjectedElement> elementsToIterate =
 				(checkedElements != null ? checkedElements : this.injectedElements);
 		if (!elementsToIterate.isEmpty()) {
-			//遍历所有需要注入的属性，这里就两个 y 和 applicationCotext
+			// 遍历所有需要注入的属性，这里就两个 y 和 applicationCotext
 			for (InjectedElement element : elementsToIterate) {
 				if (logger.isTraceEnabled()) {
 					logger.trace("Processing injected element of bean '" + beanName + "': " + element);
