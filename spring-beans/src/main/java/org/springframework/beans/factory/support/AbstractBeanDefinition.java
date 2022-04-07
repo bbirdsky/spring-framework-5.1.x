@@ -150,14 +150,14 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	private boolean lazyInit = false;
 
 	private int autowireMode = AUTOWIRE_NO;
-
+	// 默认不做依赖检查
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
-
+	// 存储dependsOn名称列表
 	@Nullable
 	private String[] dependsOn;
-
+	// 是否作为自动装配候选
 	private boolean autowireCandidate = true;
-
+	// 是否主要候选bean（当出现多个符合条件bean时，选择primary为true的来装配）
 	private boolean primary = false;
 
 	private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
@@ -165,8 +165,9 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private Supplier<?> instanceSupplier;
 
+	// 允许访问非公开方法、构造方法（反射时使用）
 	private boolean nonPublicAccessAllowed = true;
-
+	// 调用构造方法采用宽松匹配模式
 	private boolean lenientConstructorResolution = true;
 
 	@Nullable
