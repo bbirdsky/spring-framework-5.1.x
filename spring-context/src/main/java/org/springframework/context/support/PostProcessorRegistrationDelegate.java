@@ -146,6 +146,9 @@ final class PostProcessorRegistrationDelegate {
 			 * 从bdmap获取beanDefinition的beanClass类型为BeanDefinitionRegistryPostProcessor的bean的名字集合
 					* 执行spring内置的 BeanDefinitionRegistryPostProcessor
 					*/
+			// 从beanDefinitionMap中获取所有 beanClass类型为BeanDefinitionRegistryPostProcessor的bean的名字集合
+			// 此处只会获取到1个bean：internalConfigurationAnnotationProcessor =>
+			// org.springframework.context.annotation.AnnotationConfigUtils.CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME
 			String[] postProcessorNames =
 					beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
 			for (String ppName : postProcessorNames) {

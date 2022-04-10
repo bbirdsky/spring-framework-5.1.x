@@ -74,10 +74,10 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		 * 		```
 		 */
 		this.reader = new AnnotatedBeanDefinitionReader(this);
-		// spring当中的扫描器,将指定的mapscan包进行扫描处理
+
+		// spring当中的扫描器, 将指定的mapscan包进行扫描处理
+		// 注意：此scanner类，spring自身并未使用，预留给扩展spring时使用
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
-		//Thread.sleep();
-		//this.setAllowCircularReferences(false);
 	}
 
 	/**
