@@ -64,12 +64,17 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
+
 		/**
-		 * 1、完成spring内置的bd的注册
-		 * 2、
+		 * 1. 定义reader是为了使外部可以通过applicationContext.regesiter(class)的方式来注册bean
+		 * 2. 除了reader的方式之外，也可以使用AnnotatedBeanDefinition，只是这种方式就无法提供regeist方法给外部自由使用了
+		 * 		```
+		 * 		AnnotatedGenericBeanDefinition adb = new AnnotatedGenericBeanDefinition();
+		 * 		adb.regisiterBeanDefinition(Xxx)
+		 * 		```
 		 */
 		this.reader = new AnnotatedBeanDefinitionReader(this);
-		//spring当中的扫描器
+		// spring当中的扫描器,将指定的mapscan包进行扫描处理
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 		//Thread.sleep();
 		//this.setAllowCircularReferences(false);
@@ -81,6 +86,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 */
 	public AnnotationConfigApplicationContext(DefaultListableBeanFactory beanFactory) {
 		super(beanFactory);
+		// AnnotatedBeanDefinitionReader为了解析带@Configuration注解的类(也可以当作普通的GenericBeanDefinition来解析普通类)
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}

@@ -302,13 +302,13 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 		return this.metadataReaderFactory;
 	}
 
-
 	/**
 	 * Scan the class path for candidate components.
 	 * @param basePackage the package to check for annotated classes
 	 * @return a corresponding Set of autodetected bean definitions
 	 */
 	public Set<BeanDefinition> findCandidateComponents(String basePackage) {
+		// spring静态索引jar优化
 		if (this.componentsIndex != null && indexSupportsIncludeFilters()) {
 			return addCandidateComponentsFromIndex(this.componentsIndex, basePackage);
 		}
@@ -418,6 +418,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 		try {
 			String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
 					resolveBasePackage(basePackage) + '/' + this.resourcePattern;
+			// 获取需要加载的class文件的路径
 			Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
 			boolean traceEnabled = logger.isTraceEnabled();
 			boolean debugEnabled = logger.isDebugEnabled();
@@ -427,13 +428,15 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				}
 				if (resource.isReadable()) {
 					try {
+						// 获取meta信息(class resource、java class、java annotation等信息)
 						MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
-						//这是第一次判断
+						// 判断是否是spring component（第一次判断）
 						if (isCandidateComponent(metadataReader)) {
 							ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);
 							sbd.setResource(resource);
 							sbd.setSource(resource);
-							//这是第二次判断 非常重要 特别是重写自己的扫描器的时候
+							// 第二次判断是否是spring component(注意与第一次的入参不同，此次是判断beanDefinition）
+							// 用于过滤掉 接口、抽象类 等不符合要求的bean定义
 							if (isCandidateComponent(sbd)) {
 								if (debugEnabled) {
 									logger.debug("Identified candidate component class: " + resource);

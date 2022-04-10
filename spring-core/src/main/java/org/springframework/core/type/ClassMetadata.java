@@ -63,6 +63,8 @@ public interface ClassMetadata {
 	boolean isFinal();
 
 	/**
+	 * 判断底层类是否独立，即是否它是一个顶级类或嵌套类（静态内部类）可以独立于封闭类构造。
+	 *
 	 * Determine whether the underlying class is independent, i.e. whether
 	 * it is a top-level class or a nested class (static inner class) that
 	 * can be constructed independently from an enclosing class.

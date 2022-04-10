@@ -161,7 +161,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 
 		Assert.notNull(registry, "BeanDefinitionRegistry must not be null");
 		this.registry = registry;
-
+		// 是否使用spring默认的filters: @Component、@ManagedBean（JSR-250）、@Named（JSR-330）
 		if (useDefaultFilters) {
 			registerDefaultFilters();
 		}
