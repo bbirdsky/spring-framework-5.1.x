@@ -149,11 +149,19 @@ final class PostProcessorRegistrationDelegate {
 			// 从beanDefinitionMap中获取所有 beanClass类型为BeanDefinitionRegistryPostProcessor的bean的名字集合
 			// 此处只会获取到1个bean：internalConfigurationAnnotationProcessor =>
 			// org.springframework.context.annotation.AnnotationConfigUtils.CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME
+			// 在 org.springframework.context.annotation.AnnotationConfigBeanDefinitionParser.parse() 方法注入
 			String[] postProcessorNames =
 					beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
 			for (String ppName : postProcessorNames) {
+				// ppName需要符合BeanDefinitionRegistryPostProcessor.class(internalConfigurationAnnotationProcessor符合)
 				if (beanFactory.isTypeMatch(ppName, PriorityOrdered.class)) {
+					// currentRegistryProcessors 表示当前要执行的processor, 执行完之后会被清空
+					// 找到 ConfigurationClassPostProcessor 类实现在 PriorityOrdered 接口
+					// beanFactory.getBean() 代码非常重要
+					// 	    当getBean获取不到对象时，则会实例化一个对象放至spring容器(注意：在此之前spring已经将5个内置beanFactoryPostProcessor放入beanDefinitionMap)
+					// 		此时getBean拿到的对象就是此项目中的spring启动类，spring实例化一个bean仅需要beanDefinition即可
 					currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
+					// processedBeans 找到的processor类，不会被清空
 					processedBeans.add(ppName);
 				}
 			}

@@ -76,7 +76,8 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 
 		// spring当中的扫描器, 将指定的mapscan包进行扫描处理
-		// 注意：此scanner类，spring自身并未使用，预留给扩展spring时使用
+		// 注意：此scanner类，spring自身并未使用这个scanner对象，预留给扩展spring时使用, 只提供了scanner接口并不支持定制化配置
+		// spring内部进行扫描时重新new了一个，参看: org.springframework.context.annotation.ComponentScanAnnotationParser.parse()
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
@@ -99,6 +100,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * {@link Configuration @Configuration} classes
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
+		// this方法很重要：执行完成之后会实例化5个spring内置的beanFactoryProcessor
 		this();
 		/**
 		 * 1、把配置类转化成为beanDefinition对象存到 beanDefinitionMap当中
@@ -116,8 +118,6 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		 * 4、
 		 */
 		refresh();
-
-		System.out.println();
 	}
 
 	/**

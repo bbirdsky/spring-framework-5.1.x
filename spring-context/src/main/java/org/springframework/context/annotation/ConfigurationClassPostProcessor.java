@@ -266,8 +266,8 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 
 		for (String beanName : candidateNames) {
 			BeanDefinition beanDef = registry.getBeanDefinition(beanName);
-			//判读当前的 BeanDefinition所描述的 bean所对应的类 是不是一个配置类
-			//如果他是一个配置类 那么他究竟是什么样的配置
+			// 判读当前的 BeanDefinition所描述的 bean所对应的类 是不是一个配置类
+			// 如果他是一个配置类 那么他究竟是什么样的配置
 			// 1 FullConfiguration 全配置类
 			// 2 LiteConfiguration 半配置类
 			// 3 不是一个配置类
@@ -321,6 +321,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		Set<BeanDefinitionHolder> candidates = new LinkedHashSet<>(configCandidates);
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
 		do {
+			// 解析类上的注解
 			parser.parse(candidates);
 			parser.validate();
 
