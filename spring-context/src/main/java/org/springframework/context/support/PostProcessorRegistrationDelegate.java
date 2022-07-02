@@ -70,6 +70,8 @@ final class PostProcessorRegistrationDelegate {
 	 *
 	 * beanFactoryPostProcessors 这个集合一般情况等于 null
 	 * 只有在程序员通过spring 容器对象 手动添加的BeanFactoryPostProcessor对象才会存在这个集合
+	 * 可以通过 context.addBeanFactoryPostProcessor() 进行添加。
+	 * 此方法会先执行用户增加的 BeanFactoryPostProcessor
 	 * @param beanFactory
 	 * @param beanFactoryPostProcessors
 	 */
